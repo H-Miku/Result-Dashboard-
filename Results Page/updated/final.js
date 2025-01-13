@@ -13,7 +13,7 @@
       .catch(error => console.error('Error fetching data:', error));
 }*/
 
-// Update results table
+// update results table
 function updateResults(data) {
    var tbody = document.querySelector('.results-table tbody');
    tbody.innerHTML = '';
@@ -126,16 +126,16 @@ document.addEventListener("DOMContentLoaded", function() {
    });
 
    typeDropdown.addEventListener("change", function() {
-      // Clear the results table
+      
       resultsTbody.innerHTML = '';
 
       const selectedElection = electionData[this.value];
 
-      // Clear position dropdown and populate it based on the selected election type
+      // Clear position dropdo
       positionDropdown.innerHTML = '<option value="">Select Position</option>';
 
       if (selectedElection) {
-         // Populate Position dropdown
+         
          Object.keys(selectedElection).forEach(position => {
             const option = document.createElement("option");
             option.value = position;
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
    });
 
-   // Handle Position dropdown selection
+   
    positionDropdown.addEventListener("change", function() {
       const selectedElection = electionData[typeDropdown.value];
       const selectedCandidates = selectedElection ? selectedElection[this.value] : null;
@@ -159,24 +159,24 @@ document.addEventListener("DOMContentLoaded", function() {
       if (selectedCandidates && selectedCandidates.length > 0) {
          resultsTbody.innerHTML = "";
 
-         // Find the candidate with the highest vote percentage
+         //  highest vote percentage
          const highestVotePercentageCandidate = selectedCandidates.reduce((max, candidate) => {
             return (candidate.votes > max.votes) ? candidate : max;
          });
 
          selectedCandidates.forEach((candidate, index) => {
-            const votePercentage = candidate.votes > 0 ? candidate.votes : 0; // Show 0 for zero votes
-            const barWidth = votePercentage + '%'; // Set the width of the bar based on percentage
+            const votePercentage = candidate.votes > 0 ? candidate.votes : 0; 
+            const barWidth = votePercentage + '%'; 
             const isElected = (candidate === highestVotePercentageCandidate);
 
-            // Blank out the "elected" column if votes are zero
+            // blank
             const electedStatus = (votePercentage > 0) ? (isElected ? "Yes" : "No") : "";
             const barColor = (votePercentage > 0) ? (isElected ? '#4caf50' : 'red') : 'transparent';
 
-            // Blank out the vote bar if votes are zero
+            // blank
             const barStyle = (votePercentage > 0) ? `width: ${barWidth}; background-color: ${barColor}; height: 100%;` : "display: none;";
 
-            // Show zero for vote percentage and total if votes are zero
+            
             const displayedVotePercentage = (votePercentage > 0) ? votePercentage : 0;
             const displayedTotalVotes = (votePercentage > 0) ? candidate.votes : 0;
 
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function() {
    });
 });
 
-// Retrieving electionData from localStorage
+
 const storedElectionData = JSON.parse(localStorage.getItem("electionData"));
 
 if (storedElectionData) {
