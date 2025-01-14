@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
          ctx.textBaseline = "middle";
 
          const centerText = totalVotes === 0 ? "0.0%" : `${((partyData[0] / totalVotes) * 100).toFixed(2)}%`;
-         ctx.fillText(centerText, width / 2, height / 2);
+         ctx.fillText(centerText, width / 2 + width / 4, height / 2);
          ctx.restore();
       }
    };
