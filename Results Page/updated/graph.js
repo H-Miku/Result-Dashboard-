@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const electionData = JSON.parse(localStorage.getItem("electionData")) || {}; 
+    const electionData = JSON.parse(localStorage.getItem("election")) || {}; 
  
     let totalVotes = 0;
     let partyVotes = {}; 
  
     for (const electionType in electionData) {
-       for (const position in electionData[electionType]) {
+       for (const position in election[electionType]) {
           const candidates = electionData[electionType][position];
           candidates.forEach(candidate => {
              totalVotes += candidate.votes;
