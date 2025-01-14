@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-   
    const electionData = JSON.parse(localStorage.getItem("electionData")) || {}; 
 
-   
    let totalVotes = 0;
    let partyVotes = {}; 
 
@@ -19,21 +17,17 @@ document.addEventListener("DOMContentLoaded", function () {
       }
    }
 
-   
    const totalVotesElement = document.getElementById("totalVotes");
    if (totalVotesElement) {
       totalVotesElement.innerText = totalVotes;
    }
 
-   
    const registeredVoters = 100; 
    const allocatedVotes = totalVotes;
    const unregisteredVotes = registeredVoters - allocatedVotes;
 
-   
    const ballotsColors = allocatedVotes === 0 ? ["#d3d3d3", "#d3d3d3"] : ["#2196F3", "#8F00FF"];
 
-   // sustom plugin for center text 
    const centerTextPlugin = {
       id: "centerText",
       beforeDraw(chart) {
@@ -41,18 +35,17 @@ document.addEventListener("DOMContentLoaded", function () {
          const ctx = chart.ctx;
          ctx.save();
 
-         const fontSize = (Math.min(width, height) / 8).toFixed(2);
+         const fontSize = Math.min(width, height) * 0.08; // 8% of the smaller dimension
          ctx.font = `${fontSize}px sans-serif`;
          ctx.textAlign = "center";
          ctx.textBaseline = "middle";
 
          const percentage = allocatedVotes === 0 ? "0.0%" : ((allocatedVotes / registeredVoters) * 100).toFixed(2) + "%";
-         ctx.fillText(percentage, width / 2 - width / 4.6, height / 2);
+         ctx.fillText(percentage, width / 2, height / 2);
          ctx.restore();
       }
    };
 
-   // Create Ballots Chart
    const ballotsCtx = document.getElementById("ballotsChart").getContext("2d");
    const ballotsChart = new Chart(ballotsCtx, {
       type: "doughnut",
@@ -69,8 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
          responsive: true,
          aspectRatio: 3.1,
          layout: {
-            padding:{
-               left:2
+            padding: {
+               left: 2
             }
          },
          plugins: {
@@ -88,17 +81,14 @@ document.addEventListener("DOMContentLoaded", function () {
       plugins: [centerTextPlugin]
    });
 
-   //  data for the party chart
    let partyLabels = Object.keys(partyVotes);
    let partyData = partyLabels.map(party => partyVotes[party]);
 
-   
    if (partyLabels.length === 0 || totalVotes === 0) {
       partyLabels = ["No-Data"];
       partyData = [1]; 
    }
 
-   // custom plugin for center text
    const partyCenterTextPlugin = {
       id: "partyCenterText",
       beforeDraw(chart) {
@@ -106,18 +96,17 @@ document.addEventListener("DOMContentLoaded", function () {
          const ctx = chart.ctx;
          ctx.save();
 
-         const fontSize = (Math.min(width, height) / 8).toFixed(2);
+         const fontSize = Math.min(width, height) * 0.08; // 8% of the smaller dimension
          ctx.font = `${fontSize}px sans-serif`;
          ctx.textAlign = "center";
          ctx.textBaseline = "middle";
 
          const centerText = totalVotes === 0 ? "0.0%" : `${((partyData[0] / totalVotes) * 100).toFixed(2)}%`;
-         ctx.fillText(centerText, width / 2 - width / 4.9, height / 2);
+         ctx.fillText(centerText, width / 2, height / 2);
          ctx.restore();
       }
    };
 
-   //  Party Votes Chart
    const turnoutCtx = document.getElementById("turnoutChart").getContext("2d");
    const turnoutChart = new Chart(turnoutCtx, {
       type: "doughnut",
